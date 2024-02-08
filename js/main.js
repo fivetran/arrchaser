@@ -37,6 +37,20 @@ buzz.all().setVolume(volume);
 var loopGameloop;
 var loopPipeloop;
 
+var AirplaneLevel = {
+    playerClass: 'airplane',
+    pipeTopClass: 'mountain_upper',
+    pipeBottomClass: 'mountain_lower',
+    pipeBodyClass: 'mountain',
+};
+
+const LEVELS = [AirplaneLevel];
+let CURRENT_LEVEL = 0;
+
+function getLevel() {
+    return LEVELS[CURRENT_LEVEL];
+}
+
 $(document).ready(function() {
    if(window.location.search == "?debug")
       debugmode = true;
@@ -135,6 +149,7 @@ function updatePlayer(player)
 
    //apply rotation and position
    $(player).css({ rotate: rotation, top: position });
+   $(player).addClass(getLevel().playerClass);
 }
 
 function gameloop() {
@@ -452,7 +467,7 @@ function updatePipes()
    var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
    var topheight = Math.floor((Math.random()*constraint) + padding); //add lower padding
    var bottomheight = (flyArea - pipeheight) - topheight;
-   var newpipe = $('<div class="pipe animated"><div class="pipe_upper" style="height: ' + topheight + 'px;"></div><div class="pipe_lower" style="height: ' + bottomheight + 'px;"></div></div>');
+   var newpipe = $('<div class="pipe ' + getLevel().pipeBodyClass + ' animated"><div class="pipe_upper ' + getLevel().pipeBottomClass + '" style="height: ' + topheight + 'px;"></div><div class="pipe_lower ' + getLevel().pipeTopClass + '" style="height: ' + bottomheight + 'px;"></div></div>');
    $("#flyarea").append(newpipe);
    pipes.push(newpipe);
 }
