@@ -296,10 +296,12 @@ Screen - Game
    position: absolute;
    width: 34px;
    height: 24px;
-   background-image: url('../assets/bird.png');
+   background-image: url("../assets/airplane.png");
 
+  /*
    -webkit-animation: animBird 300ms steps(4) infinite;
    animation: animBird 300ms steps(4) infinite;
+   */
 }
 
 .pipe
@@ -319,7 +321,7 @@ Screen - Game
    position: absolute;
    top: 0;
    width: 52px;
-   background-image: url('../assets/pipe.png');
+   background-image: url("../assets/mountain-2.png");
    background-repeat: repeat-y;
    background-position: center;
 }
@@ -331,7 +333,7 @@ Screen - Game
    bottom: 0;
    width: 52px;
    height: 26px;
-   background-image: url('../assets/pipe-down.png');
+   background-image: url("../assets/mountain-bottom.png");
 }
 
 .pipe_lower
@@ -339,7 +341,7 @@ Screen - Game
    position: absolute;
    bottom: 0;
    width: 52px;
-   background-image: url('../assets/pipe.png');
+   background-image: url("../assets/mountain-2.png");
    background-repeat: repeat-y;
    background-position: center;
 }
@@ -351,7 +353,7 @@ Screen - Game
    top: 0;
    width: 52px;
    height: 26px;
-   background-image: url('../assets/pipe-up.png');
+   background-image: url("../assets/mountain-top.png");
 }
 
 #footer
