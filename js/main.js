@@ -38,6 +38,7 @@ var loopPipeloop;
 
 var AirplaneLevel = {
     pipeHeight: 130,
+    pipeHeightVariation: .3,
     playerClass: 'airplane',
     pipeTopClass: 'mountain_upper',
     pipeBottomClass: 'mountain_lower',
@@ -46,6 +47,7 @@ var AirplaneLevel = {
 
 var SpaceshipLevel = {
     pipeHeight: 100,
+    pipeHeightVariation: .3,
     playerClass: 'spaceship',
     pipeTopClass: 'asteroid_upper',
     pipeBottomClass: 'asteroid_lower',
@@ -475,7 +477,10 @@ function updatePipes()
    //Do any pipes need removal?
    $(".pipe").filter(function() { return $(this).position().left <= -100; }).remove()
 
-   const pipeHeight = getLevel().pipeHeight;
+   const level = getLevel();
+   const minPipeHeight = level.pipeHeight - (level.pipeHeight * level.pipeHeightVariation);
+   const maxPipeHeight = level.pipeHeight + (level.pipeHeight * level.pipeHeightVariation);
+   const pipeHeight = Math.random() * (maxPipeHeight - minPipeHeight) + minPipeHeight;
 
    //add a new pipe (top height + bottom height  + pipeHeight == flyArea) and put it in our tracker
    var padding = 80;
