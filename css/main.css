@@ -308,6 +308,10 @@ Screen - Game
    background-image: url('../assets/airplane.png') !important;
 }
 
+.spaceship {
+   background-image: url('../assets/spaceship.png') !important;
+}
+
 .pipe
 {
    position: absolute;
@@ -370,6 +374,18 @@ Screen - Game
 
 .mountain_lower:after {
    background-image: url('../assets/mountain-bottom.png') !important;
+}
+
+.asteroid_upper, .asteroid_lower {
+   background-image: url('../assets/mountain-2.png') !important;
+}
+
+.asteroid_upper:after {
+   background-image: url('../assets/asteroid-top.png') !important;
+}
+
+.asteroid_lower:after {
+   background-image: url('../assets/asteroid-bottom.png') !important;
 }
 
 #footer

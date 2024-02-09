@@ -44,11 +44,18 @@ var AirplaneLevel = {
     pipeBodyClass: 'mountain',
 };
 
-const LEVELS = [AirplaneLevel];
-let CURRENT_LEVEL = 0;
+var SpaceshipLevel = {
+    playerClass: 'spaceship',
+    pipeTopClass: 'asteroid_upper',
+    pipeBottomClass: 'asteroid_lower',
+    pipeBodyClass: 'asteroid',
+};
+
+const LEVELS = [AirplaneLevel, SpaceshipLevel];
+let currentLevel = 0;
 
 function getLevel() {
-    return LEVELS[CURRENT_LEVEL];
+    return LEVELS[currentLevel];
 }
 
 $(document).ready(function() {
@@ -56,6 +63,8 @@ $(document).ready(function() {
       debugmode = true;
    if(window.location.search == "?easy")
       pipeheight = 200;
+   if(window.location.search == "?level2")
+      currentLevel = 1
 
    //get the highscore
    var savedscore = getCookie("highscore");
@@ -345,6 +354,8 @@ function setMedal()
 
 function playerDead()
 {
+    currentLevel = 0;
+
    //stop animating everything!
    $(".animated").css('animation-play-state', 'paused');
    $(".animated").css('-webkit-animation-play-state', 'paused');
@@ -455,6 +466,8 @@ function playerScore()
    soundScore.stop();
    soundScore.play();
    setBigScore();
+   if (score < 20) currentLevel = 0;
+   else currentLevel = 1;
 }
 
 function updatePipes()
