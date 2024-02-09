@@ -18,7 +18,6 @@ var flyArea = $("#flyarea").height();
 var score = 0;
 var highscore = 0;
 
-var pipeheight = 90;
 var pipewidth = 52;
 var pipes = new Array();
 
@@ -38,6 +37,7 @@ var loopGameloop;
 var loopPipeloop;
 
 var AirplaneLevel = {
+    pipeHeight: 130,
     playerClass: 'airplane',
     pipeTopClass: 'mountain_upper',
     pipeBottomClass: 'mountain_lower',
@@ -45,6 +45,7 @@ var AirplaneLevel = {
 };
 
 var SpaceshipLevel = {
+    pipeHeight: 100,
     playerClass: 'spaceship',
     pipeTopClass: 'asteroid_upper',
     pipeBottomClass: 'asteroid_lower',
@@ -61,8 +62,6 @@ function getLevel() {
 $(document).ready(function() {
    if(window.location.search == "?debug")
       debugmode = true;
-   if(window.location.search == "?easy")
-      pipeheight = 200;
    if(window.location.search == "?level2")
       currentLevel = 1
 
@@ -212,18 +211,19 @@ function gameloop() {
    //determine the bounding box of the next pipes inner area
    var nextpipe = pipes[0];
    var nextpipeupper = nextpipe.children(".pipe_upper");
+   var pipeHeight = nextpipe.data().pipeHeight
 
    var pipetop = nextpipeupper.offset().top + nextpipeupper.height();
    var pipeleft = nextpipeupper.offset().left - 2; // for some reason it starts at the inner pipes offset, not the outer pipes.
    var piperight = pipeleft + pipewidth;
-   var pipebottom = pipetop + pipeheight;
+   var pipebottom = pipetop + pipeHeight;
 
    if(debugmode)
    {
       var boundingbox = $("#pipebox");
       boundingbox.css('left', pipeleft);
       boundingbox.css('top', pipetop);
-      boundingbox.css('height', pipeheight);
+      boundingbox.css('height', pipeHeight);
       boundingbox.css('width', pipewidth);
    }
 
@@ -475,12 +475,15 @@ function updatePipes()
    //Do any pipes need removal?
    $(".pipe").filter(function() { return $(this).position().left <= -100; }).remove()
 
-   //add a new pipe (top height + bottom height  + pipeheight == flyArea) and put it in our tracker
+   const pipeHeight = getLevel().pipeHeight;
+
+   //add a new pipe (top height + bottom height  + pipeHeight == flyArea) and put it in our tracker
    var padding = 80;
-   var constraint = flyArea - pipeheight - (padding * 2); //double padding (for top and bottom)
+   var constraint = flyArea - pipeHeight - (padding * 2); //double padding (for top and bottom)
    var topheight = Math.floor((Math.random()*constraint) + padding); //add lower padding
-   var bottomheight = (flyArea - pipeheight) - topheight;
+   var bottomheight = (flyArea - pipeHeight) - topheight;
    var newpipe = $('<div class="pipe ' + getLevel().pipeBodyClass + ' animated"><div class="pipe_upper ' + getLevel().pipeBottomClass + '" style="height: ' + topheight + 'px;"></div><div class="pipe_lower ' + getLevel().pipeTopClass + '" style="height: ' + bottomheight + 'px;"></div></div>');
+   newpipe.data('pipeHeight', pipeHeight);
    $("#flyarea").append(newpipe);
    pipes.push(newpipe);
 }
